@@ -8,14 +8,23 @@ interface IFormPassword {
 }
 
 export const FormPassword = ({ titleForm, minValue, maxValue }:IFormPassword) => {
+    const [password, setPassword] = useState<string | null>(null)
     const [valueInput, setValueInput] = useState<number>(minValue)
 
     const copyPassword = () => {
-        console.log("")
+        if (password) {
+            navigator.clipboard.writeText(password)
+            alert("Senha copiada com Sucesso")
+        }
     }
 
     const generatePassword = () => {
-        console.log("")
+        const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'
+        let newPassword = ''
+        for(let i = 0, n = charset.length; i < valueInput; ++i){
+            newPassword += charset.charAt(Math.floor(Math.random() * n));
+        }
+        setPassword(newPassword)
     }
 
     return (
@@ -27,18 +36,22 @@ export const FormPassword = ({ titleForm, minValue, maxValue }:IFormPassword) =>
                 <span>Tamanho {valueInput} caracteres</span>
                 <input 
                     type="range"
-                    min={minValue} 
+                    min={minValue}
                     max={maxValue}
                     value={valueInput}
                     onChange={(e) => setValueInput(+e.target.value)}
                 />
                 <button type="button" onClick={generatePassword}>Gerar senha</button>
             </S.ContainerInput>
-            {/* <div id="container-password" onClick={copyPassword} className="container-password hide">
-                <span className="title">Sua senha gerada foi:</span>
-                <span id="password"  className="password"></span>
-                <span className="tooltip">Clique na senha para copiar. 👆</span>
-            </div> */}
+            {!!(password) &&
+                <>
+                    <S.PasswordCamp onClick={copyPassword}>
+                        <h4>Sua Senha</h4>
+                        <span>{password}</span>
+                        <p>Clique na Senha para copiar 👆</p>
+                    </S.PasswordCamp>
+                </>
+            }
         </S.FormCamp>
     )
 }
