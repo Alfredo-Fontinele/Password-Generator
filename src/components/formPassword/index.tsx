@@ -44,13 +44,11 @@ export const FormPassword = ({ titleForm, minValue, maxValue }:IFormPassword) =>
                 <button type="button" onClick={generatePassword}>Gerar senha</button>
             </S.ContainerInput>
             {!!(password) &&
-                <>
-                    <S.PasswordCamp onClick={copyPassword}>
-                        <h4>Sua Senha</h4>
-                        <span>{password}</span>
-                        <p>Clique na Senha para copiar 👆</p>
-                    </S.PasswordCamp>
-                </>
+                <S.PasswordCamp onClick={copyPassword}>
+                    <h4>Sua Senha</h4>
+                    <span>{password}</span>
+                    <p>Clique na Senha para copiar 👆</p>
+                </S.PasswordCamp>
             }
         </S.FormCamp>
     )
