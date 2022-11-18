@@ -30,7 +30,7 @@ export const ContainerInput = styled.div<IMaxWidth>`
     align-items: center;
     width: 100%;
     max-width: ${({ maxWidth }) => maxWidth}px;
-    gap: 1rem;
+    gap: 1.7rem;
 
     span {
         font-weight: 500;
@@ -38,15 +38,35 @@ export const ContainerInput = styled.div<IMaxWidth>`
     }
 
     input[type="range"] {
-        cursor: pointer;
+        -webkit-appearance: none;
+        transition: .2s;
         width: 100%;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 4px;
+        background: springgreen;
+        cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        background: #04AA6D;
+        cursor: pointer;
     }
 
     button[type="button"] {
         cursor: pointer;
         width: 100%;
         font-weight: bold;
-        padding: 0.4rem 0;
+        padding: 0.5rem 0;
         color: #fff;
         transition: all 0.7s;
         border-radius: 5px;
@@ -54,6 +74,7 @@ export const ContainerInput = styled.div<IMaxWidth>`
     }
 
     button[type="button"]:hover {
+        box-shadow: 1px 1px 30px mediumspringgreen;
         background-color: mediumspringgreen;
     }
 `
@@ -66,7 +87,6 @@ export const PasswordCamp = styled.div`
     gap: 1rem;
     font-weight: 500;
     color: #fff;
-    cursor: pointer;
 
     p {
         transition: all 0.4s;
@@ -75,7 +95,11 @@ export const PasswordCamp = styled.div`
         border: 1px solid mediumspringgreen;
     }
 
-    &:hover p {
+    span {
+        cursor: pointer;
+    }
+
+    span:hover + p {
         opacity: 1;
     }
 `

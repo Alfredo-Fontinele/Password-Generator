@@ -1,5 +1,6 @@
 import * as S from './style'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { usePassword } from './../../hooks/usePassword';
 
 interface IFormPassword {
     titleForm: string
@@ -8,24 +9,8 @@ interface IFormPassword {
 }
 
 export const FormPassword = ({ titleForm, minValue, maxValue }:IFormPassword) => {
-    const [password, setPassword] = useState<string | null>(null)
     const [valueInput, setValueInput] = useState<number>(minValue)
-
-    const copyPassword = () => {
-        if (password) {
-            navigator.clipboard.writeText(password)
-            alert("Senha copiada com Sucesso")
-        }
-    }
-
-    const generatePassword = () => {
-        const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'
-        let newPassword = ''
-        for(let i = 0, n = charset.length; i < valueInput; ++i){
-            newPassword += charset.charAt(Math.floor(Math.random() * n));
-        }
-        setPassword(newPassword)
-    }
+    const { password, copyPassword, generatePassword } = usePassword()
 
     return (
         <S.FormCamp>
@@ -41,12 +26,12 @@ export const FormPassword = ({ titleForm, minValue, maxValue }:IFormPassword) =>
                     value={valueInput}
                     onChange={(e) => setValueInput(+e.target.value)}
                 />
-                <button type="button" onClick={generatePassword}>Gerar senha</button>
+                <button type="button" onClick={() => generatePassword(valueInput)}>Gerar senha</button>
             </S.ContainerInput>
             {!!(password) &&
-                <S.PasswordCamp onClick={copyPassword}>
+                <S.PasswordCamp>
                     <h4>Sua Senha</h4>
-                    <span>{password}</span>
+                    <span onClick={copyPassword}>{password}</span>
                     <p>Clique na Senha para copiar 👆</p>
                 </S.PasswordCamp>
             }
